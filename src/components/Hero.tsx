@@ -11,7 +11,7 @@ interface HeroProps {
 
 const Hero = ({ searchQuery, setSearchQuery, onFilterClick }: HeroProps) => {
   return (
-    <section className="relative bg-gradient-to-br from-primary via-primary to-primary-glow text-primary-foreground overflow-hidden">
+    <section className="relative bg-[image:var(--gradient-hero)] text-primary-foreground overflow-hidden">
       <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxnIGZpbGw9IiNmZmYiIGZpbGwtb3BhY2l0eT0iMC4wNSI+PHBhdGggZD0iTTM2IDE0YzMuMzE0IDAgNiAyLjY4NiA2IDZzLTIuNjg2IDYtNiA2LTYtMi42ODYtNi02IDIuNjg2LTYgNi02ek0yNCA0NGMzLjMxNCAwIDYgMi42ODYgNiA2cy0yLjY4NiA2LTYgNi02LTIuNjg2LTYtNiAyLjY4Ni02IDYtNnoiLz48L2c+PC9nPjwvc3ZnPg==')] opacity-30"></div>
       
       <div className="container mx-auto px-4 py-20 relative z-10">
@@ -23,7 +23,7 @@ const Hero = ({ searchQuery, setSearchQuery, onFilterClick }: HeroProps) => {
           
           <h1 className="text-5xl md:text-6xl font-bold leading-tight">
             Discover Campus Events
-            <span className="block mt-2 text-secondary">Never Miss a Moment</span>
+            <span className="block mt-2 bg-gradient-to-r from-white via-accent to-white bg-clip-text text-transparent animate-[pulse_3s_ease-in-out_infinite]">Never Miss a Moment</span>
           </h1>
           
           <p className="text-xl text-white/90 max-w-2xl mx-auto">

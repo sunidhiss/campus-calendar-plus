@@ -8,56 +8,59 @@ All colors MUST be HSL.
 
 @layer base {
   :root {
-    --background: 210 40% 98%;
-    --foreground: 220 20% 15%;
+    --background: 280 30% 98%;
+    --foreground: 280 20% 15%;
 
     --card: 0 0% 100%;
-    --card-foreground: 220 20% 15%;
+    --card-foreground: 280 20% 15%;
 
     --popover: 0 0% 100%;
-    --popover-foreground: 220 20% 15%;
+    --popover-foreground: 280 20% 15%;
 
-    --primary: 220 70% 45%;
+    --primary: 275 85% 60%;
     --primary-foreground: 0 0% 100%;
-    --primary-glow: 220 80% 65%;
+    --primary-glow: 285 90% 70%;
 
-    --secondary: 30 85% 55%;
+    --secondary: 330 85% 60%;
     --secondary-foreground: 0 0% 100%;
 
-    --muted: 210 30% 95%;
-    --muted-foreground: 220 15% 45%;
+    --muted: 280 20% 95%;
+    --muted-foreground: 280 15% 45%;
 
-    --accent: 30 90% 60%;
+    --accent: 200 90% 55%;
     --accent-foreground: 0 0% 100%;
 
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 220 15% 88%;
-    --input: 220 15% 92%;
-    --ring: 220 70% 45%;
+    --border: 280 15% 88%;
+    --input: 280 15% 92%;
+    --ring: 275 85% 60%;
 
-    --radius: 0.75rem;
+    --radius: 1rem;
 
-    /* Category colors */
-    --category-academic: 220 70% 50%;
-    --category-sports: 140 60% 45%;
-    --category-career: 270 60% 50%;
-    --category-social: 340 70% 55%;
-    --category-arts: 290 60% 50%;
-    --category-technical: 200 70% 45%;
+    /* Category colors - vibrant Gen Z palette */
+    --category-academic: 260 85% 65%;
+    --category-sports: 145 75% 55%;
+    --category-career: 200 80% 60%;
+    --category-social: 340 85% 65%;
+    --category-arts: 290 80% 65%;
+    --category-technical: 180 75% 55%;
 
-    /* Gradients */
-    --gradient-hero: linear-gradient(135deg, hsl(220 70% 45%) 0%, hsl(220 80% 65%) 100%);
-    --gradient-card: linear-gradient(135deg, hsl(220 70% 45% / 0.05) 0%, hsl(220 80% 65% / 0.1) 100%);
+    /* Gradients - multi-color Gen Z vibes */
+    --gradient-hero: linear-gradient(135deg, hsl(275 85% 60%) 0%, hsl(330 85% 60%) 50%, hsl(35 95% 65%) 100%);
+    --gradient-card: linear-gradient(135deg, hsl(275 85% 60% / 0.1) 0%, hsl(330 85% 60% / 0.15) 100%);
+    --gradient-accent: linear-gradient(90deg, hsl(275 85% 60%) 0%, hsl(200 90% 55%) 100%);
     
-    /* Shadows */
-    --shadow-sm: 0 2px 8px hsl(220 70% 45% / 0.08);
-    --shadow-md: 0 4px 16px hsl(220 70% 45% / 0.12);
-    --shadow-lg: 0 8px 32px hsl(220 70% 45% / 0.16);
+    /* Shadows - colorful shadows */
+    --shadow-sm: 0 2px 8px hsl(275 85% 60% / 0.12);
+    --shadow-md: 0 4px 16px hsl(275 85% 60% / 0.15);
+    --shadow-lg: 0 8px 32px hsl(275 85% 60% / 0.2);
+    --shadow-glow: 0 0 30px hsl(330 85% 60% / 0.3);
 
     /* Transitions */
     --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-bounce: all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
 
     --sidebar-background: 0 0% 98%;
 
@@ -77,48 +80,50 @@ All colors MUST be HSL.
   }
 
   .dark {
-    --background: 220 25% 8%;
-    --foreground: 210 40% 98%;
+    --background: 280 30% 8%;
+    --foreground: 280 10% 98%;
 
-    --card: 220 20% 12%;
-    --card-foreground: 210 40% 98%;
+    --card: 280 25% 12%;
+    --card-foreground: 280 10% 98%;
 
-    --popover: 220 20% 12%;
-    --popover-foreground: 210 40% 98%;
+    --popover: 280 25% 12%;
+    --popover-foreground: 280 10% 98%;
 
-    --primary: 220 80% 65%;
-    --primary-foreground: 220 25% 8%;
-    --primary-glow: 220 90% 75%;
+    --primary: 275 90% 70%;
+    --primary-foreground: 280 30% 8%;
+    --primary-glow: 285 95% 80%;
 
-    --secondary: 30 90% 60%;
+    --secondary: 330 90% 70%;
     --secondary-foreground: 0 0% 100%;
 
-    --muted: 220 20% 18%;
-    --muted-foreground: 220 15% 65%;
+    --muted: 280 20% 18%;
+    --muted-foreground: 280 10% 65%;
 
-    --accent: 30 95% 65%;
+    --accent: 200 95% 65%;
     --accent-foreground: 0 0% 100%;
 
     --destructive: 0 75% 55%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 220 20% 20%;
-    --input: 220 20% 18%;
-    --ring: 220 80% 65%;
+    --border: 280 20% 20%;
+    --input: 280 20% 18%;
+    --ring: 275 90% 70%;
 
-    --category-academic: 220 75% 60%;
-    --category-sports: 140 65% 55%;
-    --category-career: 270 65% 60%;
-    --category-social: 340 75% 65%;
-    --category-arts: 290 65% 60%;
-    --category-technical: 200 75% 55%;
+    --category-academic: 260 90% 70%;
+    --category-sports: 145 80% 65%;
+    --category-career: 200 85% 70%;
+    --category-social: 340 90% 70%;
+    --category-arts: 290 85% 70%;
+    --category-technical: 180 80% 65%;
 
-    --gradient-hero: linear-gradient(135deg, hsl(220 70% 35%) 0%, hsl(220 80% 55%) 100%);
-    --gradient-card: linear-gradient(135deg, hsl(220 70% 25% / 0.3) 0%, hsl(220 80% 35% / 0.4) 100%);
+    --gradient-hero: linear-gradient(135deg, hsl(275 85% 50%) 0%, hsl(330 85% 50%) 50%, hsl(35 90% 55%) 100%);
+    --gradient-card: linear-gradient(135deg, hsl(275 85% 30% / 0.3) 0%, hsl(330 85% 30% / 0.4) 100%);
+    --gradient-accent: linear-gradient(90deg, hsl(275 85% 50%) 0%, hsl(200 90% 50%) 100%);
     
-    --shadow-sm: 0 2px 8px hsl(220 70% 10% / 0.3);
-    --shadow-md: 0 4px 16px hsl(220 70% 10% / 0.4);
-    --shadow-lg: 0 8px 32px hsl(220 70% 10% / 0.5);
+    --shadow-sm: 0 2px 8px hsl(275 85% 20% / 0.4);
+    --shadow-md: 0 4px 16px hsl(275 85% 20% / 0.5);
+    --shadow-lg: 0 8px 32px hsl(275 85% 20% / 0.6);
+    --shadow-glow: 0 0 30px hsl(330 85% 50% / 0.4);
     --sidebar-background: 240 5.9% 10%;
     --sidebar-foreground: 240 4.8% 95.9%;
     --sidebar-primary: 224.3 76.3% 48%;
