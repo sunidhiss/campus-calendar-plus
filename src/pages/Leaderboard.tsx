@@ -63,7 +63,7 @@ const Leaderboard = () => {
   return (
     <div className="min-h-screen bg-background">
       {/* Header */}
-      <div className="bg-[image:var(--gradient-hero)] text-primary-foreground py-8">
+      <div className="bg-gradient-to-r from-primary to-primary-glow text-primary-foreground py-8">
         <div className="container mx-auto px-4">
           <Link to="/">
             <Button variant="ghost" className="mb-4 text-white hover:bg-white/10 hover:text-white">
