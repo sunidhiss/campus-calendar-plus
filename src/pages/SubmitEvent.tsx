@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -6,25 +6,97 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { ArrowLeft, Send, Calendar } from "lucide-react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { toast } from "sonner";
+import { supabase } from "@/integrations/supabase/client";
+import Navbar from "@/components/Navbar";
+import { z } from "zod";
+
+const eventSchema = z.object({
+  title: z.string().min(3, "Title must be at least 3 characters"),
+  category: z.string().min(1, "Category is required"),
+  description: z.string().min(10, "Description must be at least 10 characters"),
+  date: z.string().min(1, "Date is required"),
+  startTime: z.string().min(1, "Start time is required"),
+  endTime: z.string().min(1, "End time is required"),
+  location: z.string().min(1, "Location is required"),
+  organizer: z.string().min(2, "Organizer name is required"),
+  contact: z.string().email("Invalid email address"),
+  capacity: z.string().optional(),
+});
 
 const SubmitEvent = () => {
+  const navigate = useNavigate();
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [formData, setFormData] = useState({
+    title: "",
+    category: "",
+    description: "",
+    date: "",
+    startTime: "",
+    endTime: "",
+    location: "",
+    organizer: "",
+    contact: "",
+    capacity: "",
+  });
 
-  const handleSubmit = (e: React.FormEvent) => {
+  useEffect(() => {
+    const checkAuth = async () => {
+      const { data: { session } } = await supabase.auth.getSession();
+      if (!session) {
+        toast.error("Please log in to submit an event");
+        navigate("/auth");
+      }
+    };
+    checkAuth();
+  }, [navigate]);
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
-    
-    // Simulate submission
-    setTimeout(() => {
-      setIsSubmitting(false);
+
+    try {
+      const validated = eventSchema.parse(formData);
+      
+      const { data: { session } } = await supabase.auth.getSession();
+      if (!session) {
+        throw new Error("You must be logged in to submit events");
+      }
+
+      const { error } = await supabase.from("events").insert({
+        title: validated.title,
+        category: validated.category,
+        description: validated.description,
+        event_date: validated.date,
+        start_time: validated.startTime,
+        end_time: validated.endTime,
+        location: validated.location,
+        organizer_name: validated.organizer,
+        organizer_email: validated.contact,
+        capacity: validated.capacity ? parseInt(validated.capacity) : null,
+        status: "pending",
+        submitted_by: session.user.id,
+      });
+
+      if (error) throw error;
+
       toast.success("Event submitted successfully! It will be reviewed by our admin team.");
-    }, 1500);
+      navigate("/");
+    } catch (error: any) {
+      if (error instanceof z.ZodError) {
+        toast.error(error.errors[0].message);
+      } else {
+        toast.error(error.message || "Failed to submit event");
+      }
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
     <div className="min-h-screen bg-background">
+      <Navbar />
       {/* Header */}
       <div className="bg-gradient-to-r from-primary to-primary-glow text-primary-foreground py-8">
         <div className="container mx-auto px-4">
@@ -54,13 +126,23 @@ const SubmitEvent = () => {
                 {/* Event Title */}
                 <div className="space-y-2">
                   <Label htmlFor="title">Event Title *</Label>
-                  <Input id="title" placeholder="e.g., AI & Machine Learning Workshop" required />
+                  <Input 
+                    id="title" 
+                    placeholder="e.g., AI & Machine Learning Workshop" 
+                    value={formData.title}
+                    onChange={(e) => setFormData({ ...formData, title: e.target.value })}
+                    required 
+                  />
                 </div>
 
                 {/* Category */}
                 <div className="space-y-2">
                   <Label htmlFor="category">Category *</Label>
-                  <Select required>
+                  <Select 
+                    value={formData.category}
+                    onValueChange={(value) => setFormData({ ...formData, category: value })}
+                    required
+                  >
                     <SelectTrigger id="category">
                       <SelectValue placeholder="Select a category" />
                     </SelectTrigger>
@@ -82,6 +164,8 @@ const SubmitEvent = () => {
                     id="description" 
                     placeholder="Provide a detailed description of your event..."
                     rows={5}
+                    value={formData.description}
+                    onChange={(e) => setFormData({ ...formData, description: e.target.value })}
                     required 
                   />
                 </div>
@@ -90,22 +174,44 @@ const SubmitEvent = () => {
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                   <div className="space-y-2">
                     <Label htmlFor="date">Date *</Label>
-                    <Input id="date" type="date" required />
+                    <Input 
+                      id="date" 
+                      type="date" 
+                      value={formData.date}
+                      onChange={(e) => setFormData({ ...formData, date: e.target.value })}
+                      required 
+                    />
                   </div>
                   <div className="space-y-2">
                     <Label htmlFor="start-time">Start Time *</Label>
-                    <Input id="start-time" type="time" required />
+                    <Input 
+                      id="start-time" 
+                      type="time" 
+                      value={formData.startTime}
+                      onChange={(e) => setFormData({ ...formData, startTime: e.target.value })}
+                      required 
+                    />
                   </div>
                   <div className="space-y-2">
                     <Label htmlFor="end-time">End Time *</Label>
-                    <Input id="end-time" type="time" required />
+                    <Input 
+                      id="end-time" 
+                      type="time" 
+                      value={formData.endTime}
+                      onChange={(e) => setFormData({ ...formData, endTime: e.target.value })}
+                      required 
+                    />
                   </div>
                 </div>
 
                 {/* Location */}
                 <div className="space-y-2">
                   <Label htmlFor="location">Location *</Label>
-                  <Select required>
+                  <Select 
+                    value={formData.location}
+                    onValueChange={(value) => setFormData({ ...formData, location: value })}
+                    required
+                  >
                     <SelectTrigger id="location">
                       <SelectValue placeholder="Select a location" />
                     </SelectTrigger>
@@ -125,37 +231,36 @@ const SubmitEvent = () => {
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div className="space-y-2">
                     <Label htmlFor="organizer">Organizer Name *</Label>
-                    <Input id="organizer" placeholder="Club or Department name" required />
+                    <Input 
+                      id="organizer" 
+                      placeholder="Club or Department name" 
+                      value={formData.organizer}
+                      onChange={(e) => setFormData({ ...formData, organizer: e.target.value })}
+                      required 
+                    />
                   </div>
                   <div className="space-y-2">
                     <Label htmlFor="contact">Contact Email *</Label>
-                    <Input id="contact" type="email" placeholder="contact@university.edu" required />
+                    <Input 
+                      id="contact" 
+                      type="email" 
+                      placeholder="contact@university.edu" 
+                      value={formData.contact}
+                      onChange={(e) => setFormData({ ...formData, contact: e.target.value })}
+                      required 
+                    />
                   </div>
                 </div>
 
                 {/* Capacity */}
                 <div className="space-y-2">
                   <Label htmlFor="capacity">Event Capacity</Label>
-                  <Input id="capacity" type="number" placeholder="e.g., 50" />
-                </div>
-
-                {/* Prerequisites */}
-                <div className="space-y-2">
-                  <Label htmlFor="prerequisites">Prerequisites</Label>
-                  <Textarea 
-                    id="prerequisites" 
-                    placeholder="List any requirements (e.g., laptop required, registration fee, etc.)"
-                    rows={3}
-                  />
-                </div>
-
-                {/* Accessibility */}
-                <div className="space-y-2">
-                  <Label htmlFor="accessibility">Accessibility Information</Label>
-                  <Textarea 
-                    id="accessibility" 
-                    placeholder="Describe accessibility features (e.g., wheelchair accessible, ASL interpreter available)"
-                    rows={3}
+                  <Input 
+                    id="capacity" 
+                    type="number" 
+                    placeholder="e.g., 50" 
+                    value={formData.capacity}
+                    onChange={(e) => setFormData({ ...formData, capacity: e.target.value })}
                   />
                 </div>
 

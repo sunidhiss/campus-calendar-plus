@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Calendar, Search, Filter, Bell } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import Navbar from "@/components/Navbar";
 import Hero from "@/components/Hero";
 import EventsCalendar from "@/components/EventsCalendar";
 import EventsList from "@/components/EventsList";
@@ -17,7 +18,8 @@ const Index = () => {
 
   return (
     <div className="min-h-screen bg-background">
-      <Hero 
+      <Navbar />
+      <Hero
         searchQuery={searchQuery} 
         setSearchQuery={setSearchQuery}
         onFilterClick={() => setShowFilters(!showFilters)}

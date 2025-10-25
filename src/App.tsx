@@ -8,6 +8,8 @@ import EventDetail from "./pages/EventDetail";
 import MyEvents from "./pages/MyEvents";
 import SubmitEvent from "./pages/SubmitEvent";
 import Leaderboard from "./pages/Leaderboard";
+import Auth from "./pages/Auth";
+import AdminPanel from "./pages/AdminPanel";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -24,6 +26,8 @@ const App = () => (
           <Route path="/my-events" element={<MyEvents />} />
           <Route path="/submit-event" element={<SubmitEvent />} />
           <Route path="/leaderboard" element={<Leaderboard />} />
+          <Route path="/auth" element={<Auth />} />
+          <Route path="/admin" element={<AdminPanel />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>
